@@ -1,0 +1,32 @@
+services:
+  phoenix-volume-init:
+    image: arizephoenix/phoenix:version-20.14.0-nonroot
+    user: "0"
+    entrypoint: ["/usr/bin/python3.13"]
+    command:
+      - "-c"
+      - "import os, pathlib; p=pathlib.Path('/mnt/data'); p.mkdir(parents=True, exist_ok=True); os.chown(p, 65532, 65532)"
+    volumes:
+      - phoenix-data:/mnt/data
+
+  phoenix:
+    image: arizephoenix/phoenix:version-20.14.0-nonroot
+    restart: unless-stopped
+    depends_on:
+      phoenix-volume-init:
+        condition: service_completed_successfully
+    ports:
+      - "6006:6006"
+      - "4317:4317"
+    healthcheck:
+      test: ["CMD", "/usr/bin/python3.13", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:6006/healthz', timeout=5)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    environment:
+      PHOENIX_WORKING_DIR: /mnt/data
+    volumes:
+      - phoenix-data:/mnt/data
+
+volumes:
+  phoenix-data:

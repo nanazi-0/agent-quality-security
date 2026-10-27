@@ -1,0 +1,30 @@
+description: Agent security acceptance suite
+
+# Copy to promptfooconfig.yaml and replace this provider with your agent endpoint.
+# Keep red-team execution isolated and use scoped, non-production credentials.
+providers:
+  - id: https
+    config:
+      url: "{{env.TARGET_BASE_URL}}/agent"
+      method: POST
+      headers:
+        Content-Type: application/json
+      body:
+        message: "{{prompt}}"
+      transformResponse: "json.message"
+
+prompts:
+  - "{{prompt}}"
+
+redteam:
+  purpose: "A business agent that may only perform authorized operations"
+  numTests: 5
+  plugins:
+    - prompt-injection
+    - pii
+    - rbac
+    - excessive-agency
+    - agentic:memory-poisoning
+  strategies:
+    - jailbreak
+

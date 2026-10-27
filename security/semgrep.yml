@@ -1,0 +1,13 @@
+rules:
+  - id: python-dangerous-eval
+    message: Dynamic eval/exec can execute untrusted input.
+    severity: ERROR
+    languages: [python]
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: exec(...)
+  - id: python-shell-true
+    message: shell=True expands command injection risk.
+    severity: ERROR
+    languages: [python]
+    pattern: subprocess.$FUNC(..., shell=True, ...)

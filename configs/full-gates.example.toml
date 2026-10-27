@@ -1,0 +1,47 @@
+version = 1
+
+# Historical customization example. The repository-root quality-gates.toml is the
+# executable, fully required profile. Keep Python commands inside .venv and prefer
+# scripts/run_external.py for container-isolated external scanners.
+
+[[checks]]
+id = "unit-tests"
+layer = "software"
+command = ["python", "-m", "unittest", "discover", "-s", "tests", "-v"]
+required = true
+
+[[checks]]
+id = "business-outcomes"
+layer = "outcome"
+command = ["python", "qualityctl.py", "case-run", "cases/your-suite.json"]
+required = true
+
+[[checks]]
+id = "agent-red-team"
+layer = "agent-security"
+command = ["npx", "promptfoo", "eval", "-c", "security/promptfooconfig.yaml"]
+required = false
+
+[[checks]]
+id = "web-e2e"
+layer = "software"
+command = ["npx", "playwright", "test", "--config", "ui/playwright.config.ts"]
+required = false
+
+[[checks]]
+id = "performance-smoke"
+layer = "performance"
+command = ["k6", "run", "performance/smoke.js"]
+required = false
+
+[[checks]]
+id = "source-security"
+layer = "software-security"
+command = ["semgrep", "scan", "--config", "auto", "--error", "."]
+required = false
+
+[[checks]]
+id = "dependency-and-secret-scan"
+layer = "software-security"
+command = ["trivy", "fs", "--exit-code", "1", "--severity", "HIGH,CRITICAL", "."]
+required = false

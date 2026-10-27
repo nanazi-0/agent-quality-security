@@ -1,0 +1,2 @@
+[console_scripts]
+qualityctl = agent_quality.cli:main

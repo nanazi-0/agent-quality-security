@@ -1,0 +1,89 @@
+version = 1
+
+[[checks]]
+id = "unit-tests"
+layer = "software"
+command = ["python", "-m", "unittest", "discover", "-s", "tests", "-v"]
+required = true
+timeout_seconds = 120
+
+[[checks]]
+id = "business-outcome-and-safety-demo"
+layer = "outcome"
+command = ["python", "qualityctl.py", "demo"]
+required = true
+timeout_seconds = 120
+evidence = "reports/demo/case-results.json"
+evidence_required = true
+
+[[checks]]
+id = "telemetry-openinference"
+layer = "observability"
+command = ["python", "scripts/telemetry_smoke.py"]
+required = true
+timeout_seconds = 120
+evidence = "reports/telemetry/results.json"
+evidence_required = true
+
+[[checks]]
+id = "phoenix-trace-ingestion"
+layer = "agent-rag-eval"
+command = ["python", "scripts/phoenix_smoke.py"]
+required = true
+timeout_seconds = 120
+evidence = "reports/phoenix/results.json"
+evidence_required = true
+
+[[checks]]
+id = "agent-security-promptfoo"
+layer = "agent-security"
+command = ["python", "scripts/run_external.py", "promptfoo"]
+required = true
+timeout_seconds = 300
+evidence = "reports/promptfoo/results.json"
+evidence_required = true
+
+[[checks]]
+id = "web-ui-accessibility"
+layer = "software"
+command = ["python", "scripts/run_external.py", "playwright"]
+required = true
+timeout_seconds = 300
+evidence = "reports/playwright/results.json"
+evidence_required = true
+
+[[checks]]
+id = "performance-smoke"
+layer = "performance"
+command = ["python", "scripts/run_external.py", "k6"]
+required = true
+timeout_seconds = 300
+evidence = "reports/k6/summary.json"
+evidence_required = true
+
+[[checks]]
+id = "source-security"
+layer = "software-security"
+command = ["python", "scripts/run_external.py", "semgrep"]
+required = true
+timeout_seconds = 300
+evidence = "reports/semgrep/results.json"
+evidence_required = true
+
+[[checks]]
+id = "dependency-secret-misconfig"
+layer = "software-security"
+command = ["python", "scripts/run_external.py", "trivy"]
+required = true
+timeout_seconds = 600
+evidence = "reports/trivy/results.json"
+evidence_required = true
+
+[[checks]]
+id = "web-dynamic-security"
+layer = "software-security"
+command = ["python", "scripts/run_external.py", "zap"]
+required = true
+timeout_seconds = 600
+evidence = "reports/zap/results.json"
+evidence_required = true

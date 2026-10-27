@@ -1,0 +1,15 @@
+{
+  "platform": "Datadog",
+  "layer": "agent-observability",
+  "passed": true,
+  "summary": "Production sample stayed within the approved quality and safety thresholds",
+  "check_id": "datadog-production-evaluation",
+  "required": true,
+  "duration_seconds": 12.4,
+  "metrics": {
+    "task_success_rate": 0.97,
+    "unsafe_response_rate": 0.0
+  },
+  "evidence_uri": "replace-with-export-or-dashboard-reference"
+}
+

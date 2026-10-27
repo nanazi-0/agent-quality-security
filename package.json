@@ -1,0 +1,13 @@
+{
+  "name": "agent-quality-security-gates",
+  "private": true,
+  "version": "1.0.0",
+  "engines": {"node": ">=22.22.0"},
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.64.0"
+  },
+  "scripts": {
+    "test:ui": "playwright test --config ui/playwright.config.ts"
+  }
+}

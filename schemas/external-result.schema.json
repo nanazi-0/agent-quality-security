@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "External quality platform result envelope",
+  "type": "object",
+  "required": ["platform", "layer", "passed", "summary"],
+  "properties": {
+    "platform": {"type": "string"},
+    "layer": {"type": "string"},
+    "passed": {"type": "boolean"},
+    "summary": {"type": "string"},
+    "run_id": {"type": "string"},
+    "check_id": {"type": "string"},
+    "required": {"type": "boolean"},
+    "duration_seconds": {"type": "number", "minimum": 0},
+    "metrics": {"type": "object"},
+    "evidence_uri": {"type": "string"}
+  }
+}
+
