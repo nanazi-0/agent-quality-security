@@ -1,0 +1,2 @@
+# keep build-artifact line endings verbatim
+src/agent_quality_security.egg-info/** -text
